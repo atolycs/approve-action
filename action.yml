@@ -1,16 +1,20 @@
-name: "Example Github Actions"
-description: "Example Github Actions"
+name: "Approve for Github Apps"
+description: "approving from Github Apps"
 
-author: "Example user"
+author: "atolycs"
 
 branding:
   icon: git-pull-request
   color: red
 
 inputs:
-  hogefuga:
-    description: "hogefuga"
+  token:
+    description: Github App Token
     required: true
+  message:
+    description: Approved message
+    required: false
+
 
 runs:
   using: "node20"
