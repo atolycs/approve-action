@@ -1,0 +1,27 @@
+name: Test Approve
+
+on:
+    workflow_dispatch:
+    pull_request:
+         types: [ opened, reopened, synchronize ]
+
+jobs:
+    test:
+        name: Test Approve
+        runs-on: ubuntu-latest
+        steps:
+            - name: Generate Token
+              id: generate-token
+              uses: atolycs/create-app-auth@v1
+              with:
+                app-id: ${{ secrets.APP_ID }}
+                private-key: ${{ secrets.APP_PEM }}
+
+            - name: checkout
+              uses: actions/checkout@v4
+
+            - name: Approve Test
+              uses: ./
+              with:
+                token: ${{ steps.generate-token.outputs.token }}
+                message: "Approved! meow." 
