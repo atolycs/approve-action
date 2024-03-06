@@ -18862,7 +18862,7 @@ var require_context = __commonJS({
     exports2.Context = void 0;
     var fs_1 = require("fs");
     var os_1 = require("os");
-    var Context2 = class {
+    var Context = class {
       /**
        * Hydrate the context from the environment
        */
@@ -18908,7 +18908,7 @@ var require_context = __commonJS({
         throw new Error("context.repo requires a GITHUB_REPOSITORY environment variable like 'owner/repo'");
       }
     };
-    exports2.Context = Context2;
+    exports2.Context = Context;
   }
 });
 
@@ -22809,12 +22809,12 @@ var require_utils4 = __commonJS({
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getOctokitOptions = exports2.GitHub = exports2.defaults = exports2.context = void 0;
-    var Context2 = __importStar(require_context());
+    var Context = __importStar(require_context());
     var Utils = __importStar(require_utils3());
     var core_1 = require_dist_node8();
     var plugin_rest_endpoint_methods_1 = require_dist_node9();
     var plugin_paginate_rest_1 = require_dist_node10();
-    exports2.context = new Context2.Context();
+    exports2.context = new Context.Context();
     var baseUrl = Utils.getApiBaseUrl();
     exports2.defaults = {
       baseUrl,
@@ -22874,9 +22874,9 @@ var require_github = __commonJS({
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getOctokit = exports2.context = void 0;
-    var Context2 = __importStar(require_context());
+    var Context = __importStar(require_context());
     var utils_1 = require_utils4();
-    exports2.context = new Context2.Context();
+    exports2.context = new Context.Context();
     function getOctokit2(token2, options, ...additionalPlugins) {
       const GitHubWithPlugins = utils_1.GitHub.plugin(...additionalPlugins);
       return new GitHubWithPlugins((0, utils_1.getOctokitOptions)(token2, options));
@@ -22895,7 +22895,7 @@ async function run(core2, octokit2, context2, message2) {
   try {
     await octokit2.rest.pulls.createReview({
       ...context2.repo,
-      pull_number: context2.payload.pull_request.number,
+      pull_number: context2.payload.pull_request?.number,
       event: "APPROVE"
     });
     await octokit2.rest.pulls.createReview({
@@ -22913,9 +22913,8 @@ async function run(core2, octokit2, context2, message2) {
 var token = import_core.default.getInput("token", { required: true });
 var octokit = (0, import_github.getOctokit)(token);
 var message = import_core.default.getInput("message");
-var context = import_github.Context;
 try {
-  run(import_core.default, octokit, context, message);
+  run(import_core.default, octokit, import_github.context, message);
 } catch (e) {
   import_core.default.setFailed(`==> ${e.message}`);
 }
