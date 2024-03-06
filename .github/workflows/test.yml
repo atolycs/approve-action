@@ -20,6 +20,21 @@ jobs:
             - name: checkout
               uses: actions/checkout@v4
 
+            - name: Disapprove
+              uses: atolycs/disapprove-pr@main
+              if: github.event.action == 'reopened'
+              with:
+                token: ${{ steps.generate-token.outputs.token }}
+                message: "Disapproved"
+
+            - name: Build test
+              run: |
+                echo "building..."
+
+            - name: Running Test
+              run: |
+                echo "Running..."
+
             - name: Approve Test
               uses: ./
               with:

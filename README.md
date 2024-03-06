@@ -1,4 +1,7 @@
-# My Github Action Template Repository
+# Approve Action
+
+My Pull Request Approve Action
+
 
 - Directory Style
 
