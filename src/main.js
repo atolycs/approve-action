@@ -14,9 +14,13 @@ export async function run(core, octokit, context, message) {
       ...context.repo,
       pull_number: context.payload.pull_request.number,
       event: "APPROVE",
-      comments: {
-        body: message
-      }
+    })
+
+    await octokit.rest.pulls.createReview({
+      ...context.repo,
+      pull_number: context.payload.pull_request.number,
+      event: 'COMMENT',
+      body: message
     })
   } catch (e) {
     core.setFailed(`==> ${e.message}`)

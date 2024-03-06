@@ -22896,10 +22896,13 @@ async function run(core2, octokit2, context2, message2) {
     await octokit2.rest.pulls.createReview({
       ...context2.repo,
       pull_number: context2.payload.pull_request.number,
-      event: "APPROVE",
-      comments: {
-        body: message2
-      }
+      event: "APPROVE"
+    });
+    await octokit2.rest.pulls.createReview({
+      ...context2.repo,
+      pull_number: context2.payload.pull_request.number,
+      event: "COMMENT",
+      body: message2
     });
   } catch (e) {
     core2.setFailed(`==> ${e.message}`);
