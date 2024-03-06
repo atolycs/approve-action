@@ -12,7 +12,7 @@ export async function run(core, octokit, context, message) {
   try {
     await octokit.rest.pulls.createReview({
       ...context.repo,
-      pull_number: context.payload.pull_request.number,
+      pull_number: context.payload.pull_request?.number,
       event: "APPROVE",
     })
 
