@@ -22,7 +22,7 @@ jobs:
 
             - name: Disapprove
               uses: atolycs/disapprove-pr@main
-              if: github.event.pull_request.state == 'reopened'
+              if: github.event.action == 'reopened'
               with:
                 token: ${{ steps.generate-token.outputs.token }}
                 message: "Disapproved"
